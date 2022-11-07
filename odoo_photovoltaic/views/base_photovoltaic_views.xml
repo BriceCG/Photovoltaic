@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="view_base_photovoltaic_form" model="ir.ui.view">
+            <field name="name">view.base.photovoltaic.form</field>
+            <field name="model">base.photovoltaic</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <h1 >
+                            <field name="name" required="1"></field>
+                        </h1>
+
+                        <notebook>
+                            <page string="Details Batterie">
+                                <group>
+                                    <group>
+                                        <field name="n_ond" />
+                                        <field name="ej" />
+                                        <field name="k" />
+                                        <field name="ei" />
+                                        <field name="pu" />
+                                        <field name="pc" />
+                                        <field name="np" />
+                                    </group>
+                                    <group>
+                                        <field name="nj" />
+                                        <field name="kd" />
+                                        <field name="cu" />
+                                        <field name="ct" />
+                                        <field name="tb" />
+                                        <field name="branch_number" />
+                                        <field name="battery_number"/>
+                                        <field name="regulator_tension" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Details Couts">
+
+                            </page>
+                        </notebook>
+
+                        <notebook>
+                            <page string="Details de consommation">
+                                <field name="photovoltaic_line_ids" context="{'default_n_ond': n_ond}">
+                                    <tree editable="bottom">
+                                        <field name="name" required="1" />
+                                        <field name="is_onduleur" />
+                                        <field name="number" />
+                                        <field name="power" />
+                                        <field name="working_hours" />
+                                        <field name="ci" invisible="1" />
+                                        <field name="n_ond" invisible="1" force_save="1" />
+                                        <field name="total_consumption_line" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_base_photovoltaic_tree" model="ir.ui.view">
+            <field name="name">view.base.photovoltaic.tree</field>
+            <field name="model">base.photovoltaic</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_base_photovoltaic_action_view" model="ir.actions.act_window">
+            <field name="name">Photovoltaic</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">base.photovoltaic</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="photovoltaic_main_menu" name="Photovoltaic"  />
+        <menuitem id="photovoltaic_menu" name="Données" parent="photovoltaic_main_menu" action="action_base_photovoltaic_action_view" />
+    </data>
+</odoo>
