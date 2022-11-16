@@ -36,7 +36,117 @@
                                 </group>
                             </page>
                             <page string="Details Couts">
+                                <group col="4" string="Cout panneau solaire">
+                                    <group>
+                                        <div >Panneau solaire</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_panneau" />
+                                    </group>
+                                    <group >
+                                        <field name="np" string="Nombre de panneau"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_panneau" />
+                                    </group>
+                                </group>
 
+                                <group col="4" string="Cout batterie">
+                                    <group>
+                                        <div >Batterie</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_batterie" />
+                                    </group>
+                                    <group >
+                                        <field name="battery_number" string="Nombre de batterie"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_batterie" />
+                                    </group>
+                                </group>
+
+                                <group col="4" string="Cout convertisseur">
+                                    <group>
+                                        <div >Convertisseur</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_convertisseur" />
+                                    </group>
+                                    <group >
+                                        <field name="quantite_convertisseur"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_convertisseur" />
+                                    </group>
+                                </group>
+
+                                <group col="4" string="Cout temporisateur">
+                                    <group>
+                                        <div>Temporisateur</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_temporisateur" />
+                                    </group>
+                                    <group >
+                                        <field name="quantite_temporisateur"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_temporisateur" />
+                                    </group>
+                                </group>
+
+                                <group col="4" string="Cout contacteur">
+                                    <group>
+                                        <div>Contacteur</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_contacteur" />
+                                    </group>
+                                    <group >
+                                        <field name="quantite_contacteur"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_contacteur" />
+                                    </group>
+                                </group>
+
+                                <group col="4" string="Cout cablage">
+                                    <group>
+                                        <div>Cablage</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_cablage" />
+                                    </group>
+                                    <group >
+                                        <field name="longueur_cablage"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_cablage" />
+                                    </group>
+                                </group>
+                                <hr/>
+                                <group col="4">
+                                    <group>
+                                        <h2>Total avec kit solaire</h2>
+                                    </group>
+                                    <group />
+                                    <group />
+                                    <group >
+                                        <field name="cout_total_avec_kit_solaire" />
+                                    </group>
+                                </group>
+
+                                <group col="4">
+                                    <group>
+                                        <h2>Total sans kit solaire</h2>
+                                    </group>
+                                    <group />
+                                    <group />
+                                    <group >
+                                        <field name="cout_total_sans_kit_solaire" />
+                                    </group>
+                                </group>
                             </page>
                         </notebook>
 

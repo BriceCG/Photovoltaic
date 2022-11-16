@@ -59,7 +59,7 @@ class BasePhotovoltaicLine(models.Model):
     total_consumption_line = fields.Float(string="Consommation", compute='_compute_total_consumption_line', store=True)
 
     n_ond = fields.Float(string="N Ond")
-    is_onduleur = fields.Boolean(string="Onduleur", default=False)
+    is_onduleur = fields.Boolean(string="Onduleur", default=True)
     base_photovoltaic_id = fields.Many2one('base.photovoltaic')
 
     @api.depends('number')
@@ -76,8 +76,10 @@ class BasePhotovoltaicLine(models.Model):
             total = rec.number * rec.power * rec.working_hours * rec.ci
             if not rec.is_onduleur:
                 rec.total_consumption_line = total
-            else:
+            elif rec.n_ond != 0:
                 rec.total_consumption_line = total / rec.n_ond
+            else:
+                rec.total_consumption_line = 0
 
     def get_ci(self, number):
         ci_value = 1

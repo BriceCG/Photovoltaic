@@ -29,6 +29,33 @@ class BasePhotovoltaic(models.Model):
     regulator_tension = fields.Float(string="Tension du regulateur", compute='_compute_regulator_tension', store=True)
     photovoltaic_line_ids = fields.One2many('base.photovoltaic.line', 'base_photovoltaic_id')
 
+    # Cost information
+    prix_unitaire_panneau = fields.Float(string="Prix unitaire panneau")
+    cout_panneau = fields.Float(string="Cout panneau solaire", compute='_compute_cout_panneau', store=True)
+
+    prix_unitaire_batterie = fields.Float(string="Prix unitaire batterie")
+    cout_batterie = fields.Float(string="Cout batterie", compute='_compute_cout_batterie', store=True)
+
+    prix_unitaire_convertisseur = fields.Float(string="Prix unitaire convertisseur")
+    quantite_convertisseur = fields.Float(string="Quantite convertisseur")
+    cout_convertisseur = fields.Float(string="Cout convertisseur", compute='_compute_cout_convertisseur', store=True)
+
+    prix_unitaire_temporisateur = fields.Float(string="Prix unitaire temporisateur")
+    quantite_temporisateur = fields.Float(string="Quantite temporisateur", default=1)
+    cout_temporisateur = fields.Float(string="Cout temporisateur", compute='_compute_cout_temporisateur', store=True)
+
+    prix_unitaire_contacteur = fields.Float(string="Prix unitaire contacteur")
+    quantite_contacteur = fields.Float(string="Quantite contacteur", default=3)
+    cout_contacteur = fields.Float(string="Cout contacteur", compute='_compute_cout_contacteur', store=True)
+
+    prix_unitaire_cablage = fields.Float(string="Prix unitaire cablage")
+    longueur_cablage = fields.Float(string="Longeur cablage")
+    cout_cablage = fields.Float(string="Cout cablage", compute='_compute_cout_cablage', store=True)
+
+    cout_total_avec_kit_solaire = fields.Float(string="Cout total avec kit solaire", compute='_compute_cout_total_avec_kit_solaire', store=True)
+
+    cout_total_sans_kit_solaire = fields.Float(string="Cout total sans kit solaire", compute='_compute_cout_total_sans_kit_solaire', store=True)
+
     def get_default_name(self):
         date = fields.Date.today().strftime('%d/%m/%Y')
         name = 'Consommation du ' + date
@@ -100,7 +127,7 @@ class BasePhotovoltaic(models.Model):
     def _compute_battery_number(self):
         for rec in self:
             if rec.tb:
-                rec.battery_number = (rec.us / rec.tb) * rec.branch_number
+                rec.battery_number = math.ceil((rec.us / rec.tb) * rec.branch_number)
             else:
                 rec.battery_number = 0
 
@@ -119,3 +146,44 @@ class BasePhotovoltaic(models.Model):
     def round_up(self, n, decimals=0):
         multiplier = 10 ** decimals
         return math.ceil(n * multiplier) / multiplier
+
+    @api.depends('np', 'prix_unitaire_panneau')
+    def _compute_cout_panneau(self):
+        for rec in self:
+            rec.cout_panneau = rec.np * rec.prix_unitaire_panneau
+
+    @api.depends('np', 'prix_unitaire_batterie')
+    def _compute_cout_batterie(self):
+        for rec in self:
+            rec.cout_batterie = rec.battery_number * rec.prix_unitaire_batterie
+
+    @api.depends('quantite_convertisseur', 'prix_unitaire_convertisseur')
+    def _compute_cout_convertisseur(self):
+        for rec in self:
+            rec.cout_convertisseur = rec.quantite_convertisseur * rec.prix_unitaire_convertisseur
+
+    @api.depends('quantite_temporisateur', 'prix_unitaire_temporisateur')
+    def _compute_cout_temporisateur(self):
+        for rec in self:
+            rec.cout_temporisateur = rec.quantite_temporisateur * rec.prix_unitaire_temporisateur
+
+    @api.depends('quantite_contacteur', 'prix_unitaire_contacteur')
+    def _compute_cout_contacteur(self):
+        for rec in self:
+            rec.cout_contacteur = rec.quantite_contacteur * rec.prix_unitaire_contacteur
+
+    @api.depends('longueur_cablage', 'prix_unitaire_cablage')
+    def _compute_cout_cablage(self):
+        for rec in self:
+            rec.cout_cablage = rec.longueur_cablage * rec.prix_unitaire_cablage
+
+    @api.depends('cout_panneau', 'cout_batterie', 'cout_convertisseur', 'cout_temporisateur', 'cout_contacteur', 'cout_cablage')
+    def _compute_cout_total_avec_kit_solaire(self):
+        for rec in self:
+            rec.cout_total_avec_kit_solaire = rec.cout_panneau + rec.cout_batterie + rec.cout_convertisseur + rec.cout_temporisateur + rec.cout_contacteur + rec.cout_cablage
+
+    @api.depends('cout_panneau', 'cout_batterie', 'cout_convertisseur', 'cout_temporisateur', 'cout_contacteur',
+                 'cout_cablage')
+    def _compute_cout_total_sans_kit_solaire(self):
+        for rec in self:
+            rec.cout_total_sans_kit_solaire = rec.cout_temporisateur + rec.cout_contacteur + rec.cout_cablage
