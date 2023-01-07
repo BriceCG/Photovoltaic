@@ -12,7 +12,7 @@
                         </h1>
 
                         <notebook>
-                            <page string="Details Batterie">
+                            <page string="Données">
                                 <group>
                                     <group>
                                         <field name="n_ond" />
@@ -121,6 +121,21 @@
                                     </group>
                                 </group>
 
+                                <group col="4" string="Cout régulateur">
+                                    <group>
+                                        <div >Régulateur</div>
+                                    </group>
+                                    <group>
+                                        <field name="prix_unitaire_regulateur" />
+                                    </group>
+                                    <group>
+                                        <field name="quantite_regulateur"  />
+                                    </group>
+                                    <group>
+                                        <field name="cout_regulateur" />
+                                    </group>
+                                </group>
+
                                 <group col="4" string="Cout temporisateur">
                                     <group>
                                         <div>Temporisateur</div>
@@ -167,23 +182,19 @@
                                 </group>
                                 <hr/>
                                 <group col="4">
+                                    <group />
+                                    <group />
+                                    <group />
                                     <group>
-                                        <h2>Total avec kit solaire</h2>
-                                    </group>
-                                    <group />
-                                    <group />
-                                    <group >
                                         <field name="cout_total_avec_kit_solaire" />
                                     </group>
                                 </group>
 
                                 <group col="4">
+                                    <group />
+                                    <group />
+                                    <group />
                                     <group>
-                                        <h2>Total sans kit solaire</h2>
-                                    </group>
-                                    <group />
-                                    <group />
-                                    <group >
                                         <field name="cout_total_sans_kit_solaire" />
                                     </group>
                                 </group>
